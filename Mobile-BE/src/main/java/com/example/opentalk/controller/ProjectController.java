@@ -36,10 +36,4 @@ public class ProjectController {
         projectService.addUserToProject(userProjectDTO);
         return ResponseEntity.status(HttpStatus.OK).body("oke");
     }
-//
-//    @PostMapping("/create-task")
-//    public ResponseEntity<?> CreateTask(@RequestBody TaskDTO taskDTO) throws Throwable {
-//        projectService.createTask(taskDTO);
-//        return ResponseEntity.status(HttpStatus.OK).body("oke");
-//    }
 }

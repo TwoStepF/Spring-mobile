@@ -22,7 +22,7 @@ public class JwtToken {
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
 
-    private final long jwtExp = 5 * 1000 * 3600;
+    private final long jwtExp = 864000000;
 
 
     public String generateToken(String username) throws StatusError {

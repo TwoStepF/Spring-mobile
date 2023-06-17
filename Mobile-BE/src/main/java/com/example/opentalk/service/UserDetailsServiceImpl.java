@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Employee employee = employeeRepository.findEmployeeNotDecript(username);
         return new org.springframework.security.core.userdetails.User(employee.getName(),
                 employee.getHashPassword(),
-                employee.getActived(), true, true, true,
+                employee.getActivated(), true, true, true,
                 Collections.singletonList(new SimpleGrantedAuthority(employee.getRole())));
     }
 

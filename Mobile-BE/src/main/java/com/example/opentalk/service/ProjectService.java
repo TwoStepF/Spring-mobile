@@ -28,7 +28,9 @@ public class ProjectService {
     public ProjectDTO addProject(ProjectDTO projectDTO) throws Throwable {
         Status status = statusRepository.findStatusByName("Processing").orElseThrow(() -> new StatusError(HttpStatus.BAD_REQUEST, "can't find status name"));
         projectDTO.setStatus(status);
-        Project project = projectMapper.toEntity(projectDTO);projectRepository.save(project);
+        Project project = projectMapper.toEntity(projectDTO);
+
+        projectRepository.save(project);
         UserProject userProject = new UserProject();
         userProject.setProject(project);
         userProject.setEmployee(project.getCreator());
@@ -44,14 +46,6 @@ public class ProjectService {
          userProject.setEmployee(employee);
          userProjectRepository.save(userProject);
     }
-
-//    public void createTask(TaskDTO taskDTO){
-//        Task task = new Task();
-//        Project project = projectRepository.getById(taskDTO.getProjectId());
-//        task.setProject(project);
-//        task.setName(taskDTO.getName());
-//        taskRepository.save(task);
-//    }
 
     public List<ProjectDTO> getAllProject() {
         List<Project> project = projectRepository.findAll();

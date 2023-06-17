@@ -20,7 +20,13 @@ public class TaskDTO {
 
     private String description;
 
-    private ProjectDTO project;
+    private Long projectId;
 
-    private List<EmployeeDTO> employeeDTO;
+    private String projectName;
+
+    private String employeeName;
+
+    private Long employeeId;
+
+    private String status;
 }

@@ -34,7 +34,7 @@ public class Employee {
 
     @Column
     @Builder.Default
-    private Boolean actived = true;
+    private Boolean activated = true;
 
     @OneToOne(mappedBy = "employee")
     private OTP otp;
