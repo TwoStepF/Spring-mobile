@@ -28,6 +28,11 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(taskDTO));
     }
 
+    @PutMapping("/change-status")
+    public ResponseEntity<?> changeStatusTask(@RequestBody TaskDTO taskDTO) throws Throwable {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.changeStatusTask(taskDTO));
+    }
+
     @GetMapping("/getAll/")
     public ResponseEntity<?> TaskList(@PathParam("projectId") long projectId) {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.getListTaskByProjectId(projectId));

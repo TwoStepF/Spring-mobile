@@ -26,9 +26,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Employee findEmployeeByEmail(String name);
 
-    @Query(value = "select * from employee",
-            nativeQuery = true)
-    Page<Employee> filterEmployee(Pageable pag);
+    @Query(value = "select * from employee where " +
+            "((:activated is null) or (activated = :activated)) " +
+            "and ((:name is null) or (name LIKE %:name%)) " +
+            "and ((:role is null ) or (role = :role))", nativeQuery = true)
+    List<Employee> filterEmployee(Integer activated, String name, String role);
 
     @Query(value = "select * from employee", nativeQuery = true)
     List<EmployeeInterface> findEmployeeAndMapToITF();

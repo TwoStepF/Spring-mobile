@@ -24,10 +24,10 @@ public class TaskService {
         task.setProject(project);
         task.setName(taskDTO.getName());
         task.setDescription(taskDTO.getDescription());
-        Status status = statusRepository.findStatusByName("Processing").orElse(null);
+        Status status = statusRepository.findStatusByName("todo").orElse(null);
         Employee employee = employeeRepository.getById(taskDTO.getEmployeeId());
-        List<UserProject> userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
-        if(userProjects.size() == 0){
+        UserProject userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
+        if(userProjects == null){
             throw new RuntimeException();
         }
         task.setEmployee(employee);
@@ -53,16 +53,22 @@ public class TaskService {
         Task task = taskRepository.getById(taskDTO.getId());
         task.setName(taskDTO.getName());
         task.setDescription(taskDTO.getDescription());
-        Status status = statusRepository.findStatusByName(taskDTO.getStatus()).orElse(null);
+//        Status status = statusRepository.findStatusByName(taskDTO.getStatus()).orElse(null);
         Employee employee = employeeRepository.getById(taskDTO.getEmployeeId());
         Project project = projectRepository.getById(task.getProject().getId());
-        List<UserProject> userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
-        if(userProjects.size() == 0){
+        UserProject userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
+        if(userProjects == null){
             throw new RuntimeException();
         }
         task.setEmployee(employee);
-        task.setStatus(status);
         task = taskRepository.save(task);
+        return mapDataTaskToDTO(task);
+    }
+
+    public TaskDTO changeStatusTask(TaskDTO taskDTO) {
+        Task task = taskRepository.getById(taskDTO.getId());
+        Status status = statusRepository.findStatusByName(taskDTO.getStatus()).orElse(null);
+        task.setStatus(status);
         return mapDataTaskToDTO(task);
     }
 
