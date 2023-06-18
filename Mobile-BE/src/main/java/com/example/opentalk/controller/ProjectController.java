@@ -1,7 +1,6 @@
 package com.example.opentalk.controller;
 
 import com.example.opentalk.dto.*;
-import com.example.opentalk.entity.UserProject;
 import com.example.opentalk.service.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,9 +18,9 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @GetMapping()
-    public ResponseEntity<List<ProjectDTO>> GetProject() throws Throwable {
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProject());
+    @GetMapping("/")
+    public ResponseEntity<List<ProjectDTO>> GetProject(@PathParam("userId") long userId){
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProject(userId));
     }
 
     @PostMapping("/create")

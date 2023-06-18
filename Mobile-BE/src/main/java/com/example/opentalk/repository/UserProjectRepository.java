@@ -13,4 +13,6 @@ public interface UserProjectRepository extends JpaRepository<UserProject, Long> 
     List<UserProject> getUserProjectsByProject(Project project);
 
     List<UserProject> getUserProjectsByProjectAndEmployee(Project project, Employee employee);
+
+    List<UserProject> getUserProjectsByEmployee(Employee employee);
 }

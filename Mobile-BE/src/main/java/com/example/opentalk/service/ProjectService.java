@@ -52,7 +52,11 @@ public class ProjectService {
         }).collect(Collectors.toList());
     }
 
-    public List<ProjectDTO> getAllProject() {
+    public List<ProjectDTO> getAllProject(long userId) {
+        Employee employee = employeeRepository.getById(userId);
+        userProjectRepository.getUserProjectsByEmployee(employee).stream().map(userProject -> {
+            return MapDataEmployeetoDTO(userProject.getEmployee());
+        });
         List<Project> project = projectRepository.findAll();
         return project.stream().map(this::mapdataProjecttodto).collect(Collectors.toList());
     }
