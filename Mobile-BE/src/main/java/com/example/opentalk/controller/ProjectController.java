@@ -38,7 +38,7 @@ public class ProjectController {
         }
     }
 
-    @GetMapping("/employee-project")
+    @GetMapping("/employee-project/")
     public ResponseEntity<List<EmployeeDTO>> GetEmployeeProject(@PathParam("projectId") long projectId){
         return ResponseEntity.status(HttpStatus.OK).body(projectService.getEmployeeProject(projectId));
     }

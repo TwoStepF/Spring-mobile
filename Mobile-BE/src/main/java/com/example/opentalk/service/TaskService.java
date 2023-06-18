@@ -66,7 +66,7 @@ public class TaskService {
         return mapDataTaskToDTO(task);
     }
 
-    public List<TaskDTO> getList() {
-        return taskRepository.findAll().stream().map(this::mapDataTaskToDTO).collect(Collectors.toList());
+    public List<TaskDTO> getListTaskByProjectId(long projectId) {
+        return taskRepository.getByProjectId(projectId).stream().map(this::mapDataTaskToDTO).collect(Collectors.toList());
     }
 }

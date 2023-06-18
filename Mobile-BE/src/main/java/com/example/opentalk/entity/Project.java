@@ -29,6 +29,4 @@ public class Project {
 
     @OneToMany
     private List<Task> tasks;
-
-
 }

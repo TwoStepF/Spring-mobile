@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/task")
 @AllArgsConstructor
@@ -26,9 +28,9 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(taskDTO));
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<?> TaskList() {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.getList());
+    @GetMapping("/getAll/")
+    public ResponseEntity<?> TaskList(@PathParam("projectId") long projectId) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getListTaskByProjectId(projectId));
     }
 
 //    @GetMapping("/")

@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    @Query("select t from Task as t")
-    List<Task> findAll();
+    @Query("select t from Task as t where t.project.id = ?1")
+    List<Task> getByProjectId(long projectId);
 }
