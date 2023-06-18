@@ -18,9 +18,14 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
+//    @GetMapping("/")
+//    public ResponseEntity<List<ProjectDTO>> GetProjectByUserID(@PathParam("userId") long userId){
+//        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProject(userId));
+//    }
+
     @GetMapping("/")
-    public ResponseEntity<List<ProjectDTO>> GetProject(@PathParam("userId") long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProject(userId));
+    public ResponseEntity<List<ProjectDTO>> GetProjectByCurrent(){
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProjectByCurrent());
     }
 
     @PostMapping("/create")

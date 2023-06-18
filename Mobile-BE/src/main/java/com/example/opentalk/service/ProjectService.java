@@ -25,6 +25,7 @@ public class ProjectService {
     private final EmployeeRepository employeeRepository;
     private final UserProjectRepository userProjectRepository;
     private final TaskRepository taskRepository;
+    private final AuthService authService;
 
     public ProjectDTO addProject(ProjectDTO projectDTO) throws Throwable {
         Project project = projectMapper.toEntity(projectDTO);
@@ -52,12 +53,11 @@ public class ProjectService {
         }).collect(Collectors.toList());
     }
 
-    public List<ProjectDTO> getAllProject(long userId) {
-        Employee employee = employeeRepository.getById(userId);
-        userProjectRepository.getUserProjectsByEmployee(employee).stream().map(userProject -> {
-            return MapDataEmployeetoDTO(userProject.getEmployee());
-        });
-        List<Project> project = projectRepository.findAll();
+    public List<ProjectDTO> getAllProjectByCurrent() {
+        Employee employee = authService.getCurrentUser();
+        List<Project> project = userProjectRepository.getUserProjectsByEmployee(employee).stream().map(userProject -> {
+            return userProject.getProject();
+        }).collect(Collectors.toList());
         return project.stream().map(this::mapdataProjecttodto).collect(Collectors.toList());
     }
 
