@@ -12,14 +12,16 @@ import net.minidev.json.annotate.JsonIgnore;
 @Builder
 public class EmployeeDTO {
     private Long id;
+
     private String name;
 
-    @JsonIgnore
     private String email;
 
-    @JsonIgnore
     private String role;
 
-    @JsonIgnore
-    private Boolean actived;
+    private Boolean activated;
+
+    private long projectId;
+
+    private long taskId;
 }

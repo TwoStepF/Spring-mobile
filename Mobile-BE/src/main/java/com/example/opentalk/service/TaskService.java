@@ -1,16 +1,12 @@
 package com.example.opentalk.service;
 
 import com.example.opentalk.dto.TaskDTO;
-import com.example.opentalk.entity.Employee;
-import com.example.opentalk.entity.Project;
-import com.example.opentalk.entity.Status;
-import com.example.opentalk.entity.Task;
-import com.example.opentalk.repository.EmployeeRepository;
-import com.example.opentalk.repository.ProjectRepository;
-import com.example.opentalk.repository.StatusRepository;
-import com.example.opentalk.repository.TaskRepository;
+import com.example.opentalk.entity.*;
+import com.example.opentalk.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +15,8 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final StatusRepository statusRepository;
+    private final UserProjectRepository userProjectRepository;
+
     public TaskDTO createTask(TaskDTO taskDTO){
         Task task = new Task();
         Project project = projectRepository.getById(taskDTO.getProjectId());
@@ -27,6 +25,10 @@ public class TaskService {
         task.setDescription(taskDTO.getDescription());
         Status status = statusRepository.findStatusByName("Processing").orElse(null);
         Employee employee = employeeRepository.getById(taskDTO.getEmployeeId());
+        List<UserProject> userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
+        if(userProjects.size() == 0){
+            throw new RuntimeException();
+        }
         task.setEmployee(employee);
         task.setStatus(status);
         task = taskRepository.save(task);
@@ -52,6 +54,11 @@ public class TaskService {
         task.setDescription(taskDTO.getDescription());
         Status status = statusRepository.findStatusByName(taskDTO.getStatus()).orElse(null);
         Employee employee = employeeRepository.getById(taskDTO.getEmployeeId());
+        Project project = projectRepository.getById(task.getProject().getId());
+        List<UserProject> userProjects = userProjectRepository.getUserProjectsByProjectAndEmployee(project, employee);
+        if(userProjects.size() == 0){
+            throw new RuntimeException();
+        }
         task.setEmployee(employee);
         task.setStatus(status);
         task = taskRepository.save(task);

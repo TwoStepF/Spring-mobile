@@ -3,6 +3,7 @@ package com.example.opentalk.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +27,7 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @OneToMany
+    private List<Task> tasks;
 }

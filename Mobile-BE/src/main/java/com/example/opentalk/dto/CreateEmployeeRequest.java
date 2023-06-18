@@ -8,5 +8,4 @@ public class CreateEmployeeRequest {
     private String name;
     private String password;
     private String email;
-    private String company_branch;
 }

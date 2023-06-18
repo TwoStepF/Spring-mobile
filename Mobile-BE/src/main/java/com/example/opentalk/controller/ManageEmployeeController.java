@@ -11,7 +11,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/manage/employee")
+@RequestMapping("/admin/manage-employee/")
 @AllArgsConstructor
 public class ManageEmployeeController {
 
@@ -28,14 +28,14 @@ public class ManageEmployeeController {
         return manageEmployeeService.filterEmployee(enable, company, name, page, limit);
     }
 
-    @GetMapping("/interface")
-    public List<EmployeeInterface> getUserAndMapToInterface() {
-        return manageEmployeeService.find();
-    }
-
-    @GetMapping("/soft")
-    public List<EmployeeDTO> getUserAndSoft() {
-        return manageEmployeeService.findAndSoft();
-    }
+//    @GetMapping("/interface")
+//    public List<EmployeeInterface> getUserAndMapToInterface() {
+//        return manageEmployeeService.find();
+//    }
+//
+//    @GetMapping("/soft")
+//    public List<EmployeeDTO> getUserAndSoft() {
+//        return manageEmployeeService.findAndSoft();
+//    }
 
 }

@@ -1,9 +1,6 @@
 package com.example.opentalk.controller;
 
-import com.example.opentalk.dto.LoginRequest;
-import com.example.opentalk.dto.ProjectDTO;
-import com.example.opentalk.dto.TaskDTO;
-import com.example.opentalk.dto.UserProjectDTO;
+import com.example.opentalk.dto.*;
 import com.example.opentalk.entity.UserProject;
 import com.example.opentalk.service.ProjectService;
 import lombok.AllArgsConstructor;
@@ -11,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -32,8 +30,16 @@ public class ProjectController {
     }
 
     @PostMapping("/add-employee-collab")
-    public ResponseEntity<?> AddEmployeeCollab(@RequestBody UserProjectDTO userProjectDTO) throws Throwable {
-        projectService.addUserToProject(userProjectDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("oke");
+    public ResponseEntity<?> AddEmployeeCollab(@RequestBody List<EmployeeDTO> employeeDTO){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(projectService.addUserToProject(employeeDTO));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("false");
+        }
+    }
+
+    @GetMapping("/employee-project")
+    public ResponseEntity<List<EmployeeDTO>> GetEmployeeProject(@PathParam("projectId") long projectId){
+        return ResponseEntity.status(HttpStatus.OK).body(projectService.getEmployeeProject(projectId));
     }
 }

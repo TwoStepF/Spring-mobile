@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +39,19 @@ public class ProjectService {
         return projectMapper.toDto(projectRepository.save(project));
     }
 
-    public void addUserToProject(UserProjectDTO userProjectDTO){
-         Employee employee = employeeRepository.findEmployeeByEmail(userProjectDTO.getEmail());
-         Project project = projectRepository.getById(userProjectDTO.getProjectId());
-         UserProject userProject = new UserProject();
-         userProject.setProject(project);
-         userProject.setEmployee(employee);
-         userProjectRepository.save(userProject);
+    public List<EmployeeDTO> addUserToProject(List<EmployeeDTO> employeeDTO){
+        List<UserProject> userProjects = new ArrayList<>();
+        employeeDTO.stream().forEach(e -> {
+            Employee employee = employeeRepository.findEmployeeByEmail(e.getEmail());
+            Project project = projectRepository.getById(e.getProjectId());
+            UserProject userProject = new UserProject();
+            userProject.setProject(project);
+            userProject.setEmployee(employee);
+            userProjects.add(userProject);
+        });
+        return userProjectRepository.saveAll(userProjects).stream().map(userProject -> {
+            return MapDataEmployeetoDTO(userProject.getEmployee());
+        }).collect(Collectors.toList());
     }
 
     public List<ProjectDTO> getAllProject() {
@@ -63,5 +70,21 @@ public class ProjectService {
         projectDTO.setId(project.getId());
         projectDTO.setName(project.getName());
         return projectDTO;
+    }
+
+    public List<EmployeeDTO> getEmployeeProject(long projectId) {
+        Project project = projectRepository.getById(projectId);
+        return userProjectRepository.getUserProjectsByProject(project).stream().map(userProject -> {
+            return MapDataEmployeetoDTO(userProject.getEmployee());
+        }).collect(Collectors.toList());
+    }
+
+    public EmployeeDTO MapDataEmployeetoDTO(Employee employee) {
+        return EmployeeDTO.builder()
+                .name(employee.getName())
+                .role(employee.getRole())
+                .email(employee.getEmail())
+                .id(employee.getId())
+                .build();
     }
 }
