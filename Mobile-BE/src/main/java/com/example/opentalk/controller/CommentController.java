@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<List<CommentDTO>> getComment(@PathParam("taskId") Long taskId){
+    public ResponseEntity<List<CommentDTO>> getComment(@PathVariable Long taskId){
         return ResponseEntity.status(HttpStatus.OK).body(commentService.getComment(taskId));
     }
 
