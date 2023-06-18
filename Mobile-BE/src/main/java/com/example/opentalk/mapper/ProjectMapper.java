@@ -23,7 +23,8 @@ public class ProjectMapper{
         return Project.builder()
                 .creator(authService.getCurrentUser())
                 .name(projectdto.getName())
-                .status(projectdto.getStatus()).build();
+                .image(projectdto.getImg())
+                .build();
     }
 
     public ProjectDTO toDto(Project project){
@@ -31,7 +32,8 @@ public class ProjectMapper{
                 .id(project.getId())
                 .creator(employeeMapper.toDto(project.getCreator()))
                 .name(project.getName())
-                .status(project.getStatus()).build();
+                .img(project.getImage())
+                .build();
     }
 
 }

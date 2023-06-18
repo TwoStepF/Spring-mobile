@@ -20,14 +20,15 @@ public class Project {
     @Column()
     private String name;
 
+    @Column()
+    private String image;
+
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private Employee creator;
 
-    @ManyToOne
-    @JoinColumn(name = "status_id")
-    private Status status;
-
     @OneToMany
     private List<Task> tasks;
+
+
 }

@@ -25,4 +25,14 @@ public class TaskController {
     public ResponseEntity<?> UpdateTask(@RequestBody TaskDTO taskDTO) throws Throwable {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(taskDTO));
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> TaskList() {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.getList());
+    }
+
+//    @GetMapping("/")
+//    public ResponseEntity<?> Task(@RequestBody TaskDTO taskDTO) throws Throwable {
+//        return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(taskDTO));
+//    }
 }

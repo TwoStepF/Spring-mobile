@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -63,5 +64,9 @@ public class TaskService {
         task.setStatus(status);
         task = taskRepository.save(task);
         return mapDataTaskToDTO(task);
+    }
+
+    public List<TaskDTO> getList() {
+        return taskRepository.findAll().stream().map(this::mapDataTaskToDTO).collect(Collectors.toList());
     }
 }
